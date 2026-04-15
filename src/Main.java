@@ -1,23 +1,34 @@
-import java.util.Arrays;
-
 public class Main {
 
     public static void main(String[] args) {
 
         System.out.println("=========================================");
-        System.out.println("UC17 - Sorting Bogie Names using Arrays.sort()");
+        System.out.println("UC18 - Linear Search for Bogie ID");
         System.out.println("=========================================\n");
 
-        String[] bogieNames = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
+        // Array of bogie IDs
+        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
 
-        System.out.println("Original Bogie Names:");
-        System.out.println(Arrays.toString(bogieNames));
+        // Search key (you can change this value)
+        String searchKey = "BG309";
 
-        Arrays.sort(bogieNames);
+        boolean found = false;
 
-        System.out.println("\nSorted Bogie Names (Alphabetical):");
-        System.out.println(Arrays.toString(bogieNames));
+        // Linear Search
+        for (int i = 0; i < bogieIds.length; i++) {
+            if (bogieIds[i].equals(searchKey)) {
+                found = true;
+                break; // stop when found
+            }
+        }
 
-        System.out.println("\nUC17 completed.");
+        // Output result
+        if (found) {
+            System.out.println("Bogie ID " + searchKey + " found in the list.");
+        } else {
+            System.out.println("Bogie ID " + searchKey + " NOT found.");
+        }
+
+        System.out.println("\nUC18 search completed...");
     }
 }
