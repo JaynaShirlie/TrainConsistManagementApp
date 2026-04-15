@@ -1,47 +1,41 @@
 import org.junit.jupiter.api.Test;
+import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MainTest {
 
     @Test
-    void testBubbleSort_NormalCase() {
-        int[] arr = {72, 56, 24, 70, 60};
-        Main.bubbleSort(arr);
-        assertArrayEquals(new int[]{24, 56, 60, 70, 72}, arr);
+    void testSort_BasicAlphabeticalSorting() {
+        String[] arr = {"Sleeper","AC Chair","First Class","General","Luxury"};
+        Arrays.sort(arr);
+        assertArrayEquals(new String[]{"AC Chair","First Class","General","Luxury","Sleeper"}, arr);
     }
 
     @Test
-    void testBubbleSort_AlreadySorted() {
-        int[] arr = {10, 20, 30, 40};
-        Main.bubbleSort(arr);
-        assertArrayEquals(new int[]{10, 20, 30, 40}, arr);
+    void testSort_UnsortedInput() {
+        String[] arr = {"Luxury","General","Sleeper","AC Chair"};
+        Arrays.sort(arr);
+        assertArrayEquals(new String[]{"AC Chair","General","Luxury","Sleeper"}, arr);
     }
 
     @Test
-    void testBubbleSort_ReverseOrder() {
-        int[] arr = {90, 80, 70, 60};
-        Main.bubbleSort(arr);
-        assertArrayEquals(new int[]{60, 70, 80, 90}, arr);
+    void testSort_AlreadySortedArray() {
+        String[] arr = {"AC Chair","First Class","General"};
+        Arrays.sort(arr);
+        assertArrayEquals(new String[]{"AC Chair","First Class","General"}, arr);
     }
 
     @Test
-    void testBubbleSort_WithDuplicates() {
-        int[] arr = {50, 20, 50, 10};
-        Main.bubbleSort(arr);
-        assertArrayEquals(new int[]{10, 20, 50, 50}, arr);
+    void testSort_DuplicateBogieNames() {
+        String[] arr = {"Sleeper","AC Chair","Sleeper","General"};
+        Arrays.sort(arr);
+        assertArrayEquals(new String[]{"AC Chair","General","Sleeper","Sleeper"}, arr);
     }
 
     @Test
-    void testBubbleSort_SingleElement() {
-        int[] arr = {5};
-        Main.bubbleSort(arr);
-        assertArrayEquals(new int[]{5}, arr);
-    }
-
-    @Test
-    void testBubbleSort_EmptyArray() {
-        int[] arr = {};
-        Main.bubbleSort(arr);
-        assertArrayEquals(new int[]{}, arr);
+    void testSort_SingleElementArray() {
+        String[] arr = {"Sleeper"};
+        Arrays.sort(arr);
+        assertArrayEquals(new String[]{"Sleeper"}, arr);
     }
 }
