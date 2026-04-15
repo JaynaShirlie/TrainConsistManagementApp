@@ -1,54 +1,49 @@
-import java.util.Arrays;
-
 public class Main {
 
     public static void main(String[] args) {
 
         System.out.println("=========================================");
-        System.out.println("UC19 - Binary Search for Bogie ID");
+        System.out.println("UC20 - Exception Handling During Search");
         System.out.println("=========================================\n");
 
-        // Unsorted array of bogie IDs
-        String[] bogieIds = {"BG309", "BG101", "BG550", "BG205", "BG412"};
+        // Case 1: Empty array (to test exception)
+        String[] bogieIds = {};
 
-        // Search key (change this to test)
-        String searchKey = "BG205";
+        // Change this to test normal case:
+        // String[] bogieIds = {"BG101", "BG205", "BG309"};
 
-        // Step 1: Sort array (required for binary search)
-        Arrays.sort(bogieIds);
+        String searchKey = "BG101";
 
-        System.out.println("Sorted Bogie IDs:");
-        System.out.println(Arrays.toString(bogieIds));
+        try {
+            boolean result = searchBogie(bogieIds, searchKey);
 
-        boolean found = false;
-
-        int low = 0;
-        int high = bogieIds.length - 1;
-
-        // Binary Search
-        while (low <= high) {
-
-            int mid = (low + high) / 2;
-
-            int result = searchKey.compareTo(bogieIds[mid]);
-
-            if (result == 0) {
-                found = true;
-                break;
-            } else if (result < 0) {
-                high = mid - 1; // search left
+            if (result) {
+                System.out.println("Bogie ID " + searchKey + " found.");
             } else {
-                low = mid + 1; // search right
+                System.out.println("Bogie ID " + searchKey + " NOT found.");
+            }
+
+        } catch (IllegalStateException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        System.out.println("\nUC20 execution completed...");
+    }
+
+    public static boolean searchBogie(String[] bogieIds, String key) {
+
+
+        if (bogieIds == null || bogieIds.length == 0) {
+            throw new IllegalStateException("No bogies available to search.");
+        }
+
+        // Linear Search
+        for (int i = 0; i < bogieIds.length; i++) {
+            if (bogieIds[i].equals(key)) {
+                return true;
             }
         }
 
-        // Output result
-        if (found) {
-            System.out.println("\nBogie ID " + searchKey + " found.");
-        } else {
-            System.out.println("\nBogie ID " + searchKey + " NOT found.");
-        }
-
-        System.out.println("\nUC19 search completed...");
+        return false;
     }
 }
