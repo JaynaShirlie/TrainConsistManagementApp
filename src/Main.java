@@ -1,57 +1,79 @@
 import java.util.*;
 import java.util.stream.*;
 
-class GoodsBogie {
-    private String type;
-    private String cargo;
+public class UseCase13TrainConsistent {
 
-    public GoodsBogie(String type, String cargo) {
-        this.type = type;
-        this.cargo = cargo;
+    // 🔹 Bogie Model
+    static class Bogie {
+        String type;
+        int capacity;
+
+        Bogie(String type, int capacity) {
+            this.type = type;
+            this.capacity = capacity;
+        }
+
+        @Override
+        public String toString() {
+            return type + " (" + capacity + ")";
+        }
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public String getCargo() {
-        return cargo;
-    }
-}
-
-public class Main {
     public static void main(String[] args) {
 
         System.out.println("======================================");
-        System.out.println("UC12 - Safety Compliance Check for Goods Bogies");
+        System.out.println("UC13 - Performance Comparison (Loops vs Streams)");
         System.out.println("======================================\n");
 
-        List<GoodsBogie> bogies = new ArrayList<>();
+        // 🔹 Create large dataset
+        List<Bogie> bogies = new ArrayList<>();
 
-        bogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
-        bogies.add(new GoodsBogie("Open", "Coal"));
-        bogies.add(new GoodsBogie("Box", "Grain"));
-        bogies.add(new GoodsBogie("Cylindrical", "Coal"));
-
-        System.out.println("Goods Bogies in Train:");
-        for (GoodsBogie b : bogies) {
-            System.out.println(b.getType() + " -> " + b.getCargo());
+        // Adding sample data (large dataset simulation)
+        for (int i = 0; i < 100000; i++) {
+            if (i % 3 == 0)
+                bogies.add(new Bogie("Sleeper", 72));
+            else if (i % 3 == 1)
+                bogies.add(new Bogie("AC Chair", 50));
+            else
+                bogies.add(new Bogie("First Class", 65));
         }
 
-        boolean isSafe = bogies.stream()
-                .allMatch(b ->
-                        !b.getType().equals("Cylindrical") ||
-                                b.getCargo().equals("Petroleum")
-                );
+        // 🔴 LOOP-BASED FILTERING
+        long loopStart = System.nanoTime();
 
-        System.out.println("\nSafety Compliance Status: " + isSafe);
+        List<Bogie> loopResult = new ArrayList<>();
+        for (Bogie b : bogies) {
+            if (b.capacity > 60) {
+                loopResult.add(b);
+            }
+        }
 
-        if (isSafe) {
-            System.out.println("Train formation is SAFE.");
+        long loopEnd = System.nanoTime();
+        long loopTime = loopEnd - loopStart;
+
+        // 🔵 STREAM-BASED FILTERING
+        long streamStart = System.nanoTime();
+
+        List<Bogie> streamResult = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
+
+        long streamEnd = System.nanoTime();
+        long streamTime = streamEnd - streamStart;
+
+        // 🔹 OUTPUT RESULTS
+        System.out.println("Loop Result Count   : " + loopResult.size());
+        System.out.println("Stream Result Count : " + streamResult.size());
+
+        System.out.println("\nExecution Time:");
+        System.out.println("Loop Time   : " + loopTime + " ns");
+        System.out.println("Stream Time : " + streamTime + " ns");
+
+        // 🔹 Verify both results match
+        if (loopResult.size() == streamResult.size()) {
+            System.out.println("\n✔ Results Match");
         } else {
-            System.out.println("Train formation is NOT SAFE.");
+            System.out.println("\n❌ Results Do NOT Match");
         }
-
-        System.out.println("\nUC12 safety validation completed...");
     }
 }
