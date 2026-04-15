@@ -1,34 +1,54 @@
+import java.util.Arrays;
+
 public class Main {
 
     public static void main(String[] args) {
 
         System.out.println("=========================================");
-        System.out.println("UC18 - Linear Search for Bogie ID");
+        System.out.println("UC19 - Binary Search for Bogie ID");
         System.out.println("=========================================\n");
 
-        // Array of bogie IDs
-        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+        // Unsorted array of bogie IDs
+        String[] bogieIds = {"BG309", "BG101", "BG550", "BG205", "BG412"};
 
-        // Search key (you can change this value)
-        String searchKey = "BG309";
+        // Search key (change this to test)
+        String searchKey = "BG205";
+
+        // Step 1: Sort array (required for binary search)
+        Arrays.sort(bogieIds);
+
+        System.out.println("Sorted Bogie IDs:");
+        System.out.println(Arrays.toString(bogieIds));
 
         boolean found = false;
 
-        // Linear Search
-        for (int i = 0; i < bogieIds.length; i++) {
-            if (bogieIds[i].equals(searchKey)) {
+        int low = 0;
+        int high = bogieIds.length - 1;
+
+        // Binary Search
+        while (low <= high) {
+
+            int mid = (low + high) / 2;
+
+            int result = searchKey.compareTo(bogieIds[mid]);
+
+            if (result == 0) {
                 found = true;
-                break; // stop when found
+                break;
+            } else if (result < 0) {
+                high = mid - 1; // search left
+            } else {
+                low = mid + 1; // search right
             }
         }
 
         // Output result
         if (found) {
-            System.out.println("Bogie ID " + searchKey + " found in the list.");
+            System.out.println("\nBogie ID " + searchKey + " found.");
         } else {
-            System.out.println("Bogie ID " + searchKey + " NOT found.");
+            System.out.println("\nBogie ID " + searchKey + " NOT found.");
         }
 
-        System.out.println("\nUC18 search completed...");
+        System.out.println("\nUC19 search completed...");
     }
 }
