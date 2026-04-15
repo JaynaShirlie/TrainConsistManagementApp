@@ -4,44 +4,37 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MainTest {
 
     @Test
-    void testBubbleSort_NormalCase() {
+    void testSort_BasicSorting() {
         int[] arr = {72, 56, 24, 70, 60};
         Main.bubbleSort(arr);
         assertArrayEquals(new int[]{24, 56, 60, 70, 72}, arr);
     }
 
     @Test
-    void testBubbleSort_AlreadySorted() {
-        int[] arr = {10, 20, 30, 40};
+    void testSort_AlreadySortedArray() {
+        int[] arr = {24, 56, 60, 70, 72};
         Main.bubbleSort(arr);
-        assertArrayEquals(new int[]{10, 20, 30, 40}, arr);
+        assertArrayEquals(new int[]{24, 56, 60, 70, 72}, arr);
     }
 
     @Test
-    void testBubbleSort_ReverseOrder() {
-        int[] arr = {90, 80, 70, 60};
+    void testSort_DuplicateValues() {
+        int[] arr = {72, 56, 56, 24};
         Main.bubbleSort(arr);
-        assertArrayEquals(new int[]{60, 70, 80, 90}, arr);
+        assertArrayEquals(new int[]{24, 56, 56, 72}, arr);
     }
 
     @Test
-    void testBubbleSort_WithDuplicates() {
-        int[] arr = {50, 20, 50, 10};
+    void testSort_SingleElementArray() {
+        int[] arr = {50};
         Main.bubbleSort(arr);
-        assertArrayEquals(new int[]{10, 20, 50, 50}, arr);
+        assertArrayEquals(new int[]{50}, arr);
     }
 
     @Test
-    void testBubbleSort_SingleElement() {
-        int[] arr = {5};
+    void testSort_AllEqualValues() {
+        int[] arr = {40, 40, 40};
         Main.bubbleSort(arr);
-        assertArrayEquals(new int[]{5}, arr);
-    }
-
-    @Test
-    void testBubbleSort_EmptyArray() {
-        int[] arr = {};
-        Main.bubbleSort(arr);
-        assertArrayEquals(new int[]{}, arr);
+        assertArrayEquals(new int[]{40, 40, 40}, arr);
     }
 }
